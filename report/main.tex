@@ -1,0 +1,72 @@
+\documentclass[a4paper,12pt]{article}
+\input{"report/preamble.tex"}
+
+\usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{2cm}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+\renewcommand{\headrulewidth}{0pt}
+\usepackage{soul}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=CadetBlue,
+    filecolor=CadetBlue,
+    urlcolor=CadetBlue
+}
+
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{parskip}
+
+\setlength\columnsep{18pt}
+
+% Sets abstract
+\renewenvironment{abstract}
+ {\par\noindent\textbf{\abstractname}\ \ignorespaces}
+ {\par\noindent\medskip}
+
+\begin{document}
+
+% Makes header
+\pagestyle{fancy}
+\thispagestyle{empty}
+\fancyhead[R]{\textit{Qalam}}
+\fancyhead[L]{}
+
+% Makes footnotes with an asterisk
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\begin{center}
+    \Large{\textbf{Comparison of Ray Optics and Wave Optics in Imaging Systems}}
+    \vspace{0.5cm}
+ 
+    \normalsize
+    \ Abdullah Qalam, Abdellatif Mohamed Ahmed, Areeba Warsi
+    \vspace{0.1cm}
+ 
+    \textit{Ozyegin University}
+    \medskip
+ 
+    \normalsize
+\end{center}
+
+{\color{gray}\hrule}
+\vspace{0.4cm}
+
+\begin{abstract}
+    \input{./report/abstract.tex}
+\end{abstract}
+
+{\color{gray}\hrule}
+\medskip
+
+\input{./sections/1_intro.tex}
+\input{./sections/2_section.tex}
+\input{./sections/3_section.tex}
+\input{./sections/4_section.tex}
+\input{./sections/5_conclusion.tex}
+
+\end{document}

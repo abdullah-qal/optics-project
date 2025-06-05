@@ -1,0 +1,405 @@
+%----------------------PACKAGES----------------------%
+
+% Fonts, Typography, and Text Formatting
+\usepackage[charter, cal=cmcal]{mathdesign}      % Charter font and math fonts
+\usepackage[scaled=.96]{XCharter}                % Scaled Charter text font
+\usepackage{microtype}                           % Fine typographical adjustments (e.g., kerning)
+
+% Colors
+\usepackage{xcolor}                              % For defining and using colors
+
+% Math Tools and Symbols
+\usepackage{amsmath}                             % Core package for advanced math typesetting
+\usepackage[fixamsmath]{mathtools}               % Extensions to amsmath, fixing bugs and adding features
+% \usepackage{nicematrix}                        % Create matrices with enhanced formatting options
+\usepackage{bm}                                  % Bold math symbols
+\usepackage[Smaller]{cancel}                     % Cancel terms in equations with diagonal lines
+\usepackage[e]{esvect}                           % Extended vector arrows
+\usepackage{siunitx}                             % For formatted units
+
+% Lists, Tables, and Layout Utilities
+% \usepackage{booktabs}                          % Professional-quality tables
+\usepackage{tabularray}                          % Improves and add to base table functionality 
+\usepackage[shortlabels, inline]{enumitem}       % Customized lists with inline option
+% \usepackage{parskip}                           % Adjust paragraph spacing (removes indent and adds space between paragraphs)
+
+% Page Layout and headers
+% \usepackage{geometry}                          % Adjust page layout (margins, etc.)
+% \usepackage{fancyhdr}                          % Custom headers and footers
+% \usepackage{titling}                           % Customize title formatting
+% \usepackage{scrlayer-scrpage}                    % KOMA-script enhanced headers and footers support
+
+% Floating Figures and Tables
+\usepackage{float}                               % Control the placement of figures and tables
+
+% Graphics and Plotting 
+\usepackage{tikz}                                % Drawing and diagramming
+\usepackage{pgfplots}                            % Create plots using TikZ
+\pgfplotsset{compat=1.18}
+
+% Miscellaneous 
+% \usepackage{lipsum}                            % Generate placeholder text
+ 
+\usepackage{expl3}
+%----------------------DELIMITERS----------------------%
+
+\makeatletter
+\NewDocumentCommand \NewPairedDelimiter { m m m } {%
+  \expandafter\DeclarePairedDelimiter\csname PAIRED\string#1\endcsname{#2}{#3}%
+  \newcommand#1{%
+    \@ifstar{\csname PAIRED\string#1\endcsname}
+            {\@ifnextchar[{\csname PAIRED\string#1\endcsname}
+                          {\csname PAIRED\string#1\endcsname*}%
+            }%
+  }%
+}
+\NewDocumentCommand \NewPairedDelimiterX { m m m m } {%
+  \expandafter\DeclarePairedDelimiterX\csname PAIREDX\string#1\endcsname[2]{#2}{#3}{#4}%
+  \newcommand#1{%
+    \@ifstar{\csname PAIREDX\string#1\endcsname}
+            {\@ifnextchar[{\csname PAIREDX\string#1\endcsname}
+                          {\csname PAIREDX\string#1\endcsname*}%
+            }%
+  }%
+}
+\NewDocumentCommand \NewPairedDelimiterXPP { m m m m m m } {%
+  \expandafter\DeclarePairedDelimiterXPP\csname PAIREDXPP\string#1\endcsname[2]{#2}{#3}{#4}{#5}{#6}%
+  \newcommand#1{%
+    \@ifstar{\csname PAIREDXPP\string#1\endcsname}
+            {\@ifnextchar[{\csname PAIREDXPP\string#1\endcsname}
+                          {\csname PAIREDXPP\string#1\endcsname*}%
+            }%
+  }%
+}
+\makeatother
+
+\NewPairedDelimiterXPP \map {#1} ( ) { } { #2 } 
+
+\NewPairedDelimiterXPP \bmap {#1} [ ] { } { #2 }
+
+\NewPairedDelimiterXPP \cmap { #1 } \{ \} { } { #2 }
+
+
+\NewPairedDelimiter \parens ( )
+
+\NewPairedDelimiter \bracks [ ] 
+
+\NewPairedDelimiter \curls \{ \} 
+
+\NewPairedDelimiter \abs \lvert \rvert 
+
+\NewPairedDelimiter \norm \lVert \rVert
+
+\NewPairedDelimiter \floor \lfloor \rfloor
+
+\NewPairedDelimiter \ceil \lceil \rceil
+
+\NewPairedDelimiterX \ff . . { #1 \delimsize/ #2 } 
+
+
+%----------------------VECTORS & BOLDING----------------------%
+
+\let\vvv\vv 
+\def\vv#1{\vvv{\vb{#1}}}
+
+\NewDocumentCommand \vb { s m } { 
+    \IfBooleanTF { #1 } { \mathbf{ #2 } } { \boldsymbol{ #2 } } 
+}
+
+\NewDocumentCommand \vu { s m } {
+     \widehat { \IfBooleanTF {#1} { \boldsymbol } { \mathbf } {#2} } 
+}
+
+\NewDocumentCommand \vc { s m }{ 
+    \widehat { \IfBooleanTF {#1} { \mathbf } { \boldsymbol } {#2} } \,
+}
+
+\NewDocumentCommand \cross { } { 
+    \boldsymbol{\times} 
+}
+
+\NewDocumentCommand \vdot { } { 
+    \boldsymbol{\cdot} 
+}
+
+\NewDocumentCommand \grad { } { 
+    \vv \nabla 
+}
+
+\RenewDocumentCommand \div { } { 
+    \grad \vdot 
+}
+
+\NewDocumentCommand \curl { } { 
+    \grad \cross 
+}
+
+\NewDocumentCommand \lap { O{2} } {
+    \nabla^{#1}
+}
+
+%----------------------DERIVATIVES----------------------%
+
+\NewDocumentCommand \diff { } {
+    \mathord{d\mkern-0.4\thinmuskip}
+}
+\NewDocumentCommand \pdiff { } {
+    \partial\mkern-0.5\thinmuskip
+}
+\NewDocumentCommand \dd { } {
+    \mathop{}\!\diff
+}
+
+\NewDocumentCommand \dv { s O{} m } {
+		\IfBooleanTF {#1} { \ff } { \f }
+		{ \diff #2 } { \diff #3 }
+}
+
+\NewDocumentCommand \ndv { m s O{} m } {
+		\IfBooleanTF {#2} { \ff* } { \f }
+		{ \diff^{#1} #3 } { \diff #4^{#1} }
+}
+
+\NewDocumentCommand \pndv { m s O{} m } {
+		\IfBooleanTF {#2} { \ff* } { \f }
+		{ \pdiff^{#1} #3 } { \pdiff #4^{#1} }
+}
+\NewDocumentCommand \pdv { s O{} m } {
+		\IfBooleanTF {#1} { \ff* } { \f }
+		{ \pdiff #2 } { \pdiff #3 }
+}
+
+\NewDocumentCommand \pddv { s O{} m m } {
+		\IfBooleanTF {#1} { \ff* } { \f }
+		{ \pdiff^2 #2 } { \pdiff #3 \pdiff #4 }
+}
+
+\NewDocumentCommand \pdddv { s O{} m m m } {
+		\IfBooleanTF {#1} { \ff* } { \f }
+		{ \pdiff^3 #2 } { \pdiff #3 \pdiff #4 \pdiff #5 }
+}
+
+%----------------------MISC. MATH MACROS----------------------%
+
+
+\NewDocumentCommand \Implies { } {
+     \;\Rightarrow
+}
+
+\NewDocumentCommand \Iff { } {
+     \; \Leftrightarrow \;
+}
+
+\NewDocumentCommand \rect { } {
+     \op{rect}
+}
+
+\RenewDocumentCommand \Re { } {
+    \op{Re}    
+}
+
+\RenewDocumentCommand \Im { } {
+    \op{Im}    
+}
+
+\NewDocumentCommand \csch { } {
+\op{csch}
+}
+
+\NewDocumentCommand \sech { } {
+\op{sech}
+}
+
+\NewDocumentCommand \trans { m } {
+    #1^{\mathsf T}
+}
+
+\NewDocumentCommand \comp { m } {
+    #1^{\mathsf C}
+}
+
+\NewDocumentCommand \adj { m } {
+    #1^{\mathsf H}
+}
+
+
+\NewDocumentCommand \mat { O{p} o +m }
+	{
+		\IfValueTF {#2}
+			{ \begin{#1matrix*}[#2] }
+			{ \begin{#1matrix} }
+			#3
+		\IfValueTF {#2}
+			{ \end{#1matrix*} }
+			{ \end{#1matrix} }
+	}
+    
+%----------------------MISC. TEXT MACROS----------------------%
+
+% Define date formats
+\makeatletter
+\newcommand*\twodigits[1]{\ifnum#1<10 0\fi\the#1}
+\newcommand*\shortdate{\the\year-\twodigits\month-\twodigits\day}
+\newcommand*\monthyear{%
+    \ifcase\month\or January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or
+  December\fi\space\number\year
+}
+\makeatother
+
+\RenewCommandCopy \t {
+    \text
+}
+
+%----------------------SHORTCUTS----------------------%
+
+\NewCommandCopy \f {
+    \frac
+}
+
+\RenewCommandCopy \le {
+    \leqslant
+}
+
+\RenewCommandCopy \ge {
+    \geqslant
+}
+
+\NewCommandCopy \tb {
+    \textbf
+}
+
+\NewCommandCopy \ds {
+    \displaystyle    
+}
+
+\NewCommandCopy \op {
+    \operatorname    
+}
+
+\NewCommandCopy \eps {
+    \varepsilon
+}
+
+\NewCommandCopy \q {
+    \quad
+}
+
+\NewCommandCopy \vd {
+    \vdot
+}
+
+\NewCommandCopy \qq {
+    \qquad
+}
+
+\NewCommandCopy \0 {
+    \mathcolor
+}
+
+\NewCommandCopy \1 {
+    \indicator
+}
+
+\NewCommandCopy \2 {
+    \cdot
+}
+
+\NewCommandCopy \3 {
+    \sqrt
+}
+
+\NewCommandCopy \4 {
+    \frac
+}
+
+\NewCommandCopy \5 {
+    \ff
+}
+
+\NewCommandCopy \6 {
+    \map
+}
+
+\NewCommandCopy \7 {
+    \bmap
+}
+
+\NewCommandCopy \8 {
+    \parens
+}
+
+\NewCommandCopy \9 {
+    \bracks
+}
+%----------------------COLOURS----------------------%
+
+
+%----------------------TYPESET----------------------%
+% Commands for \mathbb
+
+\newcommand{\N}{\vb*{N}}
+\newcommand{\Q}{\vb*{Q}}
+\newcommand{\R}{\vb*{R}}
+\newcommand{\Z}{\vb*{Z}}
+\newcommand{\C}{\vb*{C}}
+\newcommand{\F}{\vb*{F}}
+
+% Commands for \mathcal
+
+\renewcommand{\AA}{\mathcal{A}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\DD}{\mathcal{D}}
+\newcommand{\EE}{\mathcal{E}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\GG}{\mathcal{G}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\JJ}{\mathcal{J}}
+\newcommand{\KK}{\mathcal{K}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\NN}{\mathcal{N}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\QQ}{\mathcal{Q}}
+\newcommand{\RR}{\mathcal{R}}
+\renewcommand{\SS}{\mathcal{S}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\VV}{\mathcal{V}}
+\newcommand{\WW}{\mathcal{W}}
+\newcommand{\XX}{\mathcal{X}}
+\newcommand{\YY}{\mathcal{Y}}
+\newcommand{\ZZ}{\mathcal{Z}}
+
+% Commands for \mathscr
+\newcommand{\AAA}{\mathscr{A}}
+\newcommand{\BBB}{\mathscr{B}}
+\newcommand{\CCC}{\mathscr{C}}
+\newcommand{\DDD}{\mathscr{D}}
+\newcommand{\EEE}{\mathscr{E}}
+\newcommand{\FFF}{\mathscr{F}}
+\newcommand{\GGG}{\mathscr{G}}
+\newcommand{\HHH}{\mathscr{H}}
+\newcommand{\III}{\mathscr{I}}
+\newcommand{\JJJ}{\mathscr{J}}
+\newcommand{\KKK}{\mathscr{K}}
+\newcommand{\LLL}{\mathscr{L}}
+\newcommand{\MMM}{\mathscr{M}}
+\newcommand{\NNN}{\mathscr{N}}
+\newcommand{\OOO}{\mathscr{O}}
+\newcommand{\PPP}{\mathscr{P}}
+\newcommand{\QQQ}{\mathscr{Q}}
+\newcommand{\RRR}{\mathscr{R}}
+\newcommand{\SSS}{\mathscr{S}}
+\newcommand{\TTT}{\mathscr{T}}
+\newcommand{\UUU}{\mathscr{U}}
+\newcommand{\VVV}{\mathscr{V}}
+\newcommand{\WWW}{\mathscr{W}}
+\newcommand{\XXX}{\mathscr{X}}
+\newcommand{\YYY}{\mathscr{Y}}
+\newcommand{\ZZZ}{\mathscr{Z}}
+
+
