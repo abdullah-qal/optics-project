@@ -1,1 +1,27 @@
+This paper aims to provide a comparative analysis of ray (geometric) optics with wave (physical) optics in the context of 
+imaging systems. We evaluate how well each explains or predicts how images are formed and what limits the quality of those images in physical optical systems.   
+More specifically, we highlight: 
+\begin{itemize}
+    \item Limitations of the ray model in representing physical phenomena accurately
+    \item How the wave model explains phenomena that affect image sharpness, brightness, and contrast
+\end{itemize}
+To that end, we consider the following two points of interest under different optical setups by means of a simulation-based approach, and verify
+whether the respective ray and wave models' predictions hold:  
+\begin{enumerate} 
+    \item Diffraction Effects in a Lens-Based Imaging System.
+        \begin{itemize}
+            \item \tb{Setup:} Simulate a point source imaged through a circular lens aperture. 
+            \item \tb{Ray Optics Prediction:} The image of a point is a perfect point at the focus.
+            \item \tb{Wave Optics Prediction:} The image is an Airy disk due to diffraction at the aperture edges.
+        \end{itemize}
+    \item Aberrations in High-Aperture Lenses
+        \begin{itemize}
+            \item \tb{Setup:} Simulate off-axis point imaging using a high numerical aperture lens, for simplicity, a spherical lens is considered. 
+            \item \tb{Ray Optics Prediction:} Rays don't all focus to a single point due to primarily spherical and chromatic aberration, but can still be traced.
+            \item \tb{Wave Optics Prediction:} Also accounts for the interference patterns and phase shifts that occur; blurring and PSF distortions should be more precise. 
+        \end{itemize}
+\end{enumerate}
+The above two setups support our objectives by examining two important optical processes: diffraction and aberrations, both of which critically impact optical system performance. Our simulations confirm 
+our predictions for both models and reveal the limitations of the ray model in predicting systems with strong diffractive or aberrative effects.   
+
 
