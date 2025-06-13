@@ -223,16 +223,15 @@
 }
 
 
-\NewDocumentCommand \mat { O{p} o +m }
-	{
-		\IfValueTF {#2}
-			{ \begin{#1matrix*}[#2] }
-			{ \begin{#1matrix} }
-			#3
-		\IfValueTF {#2}
-			{ \end{#1matrix*} }
-			{ \end{#1matrix} }
-	}
+\NewDocumentCommand \mat { O{p} o +m } {
+    \IfValueTF {#2}
+        { \begin{#1matrix*}[#2] }
+        { \begin{#1matrix} }
+        #3
+    \IfValueTF {#2}
+        { \end{#1matrix*} }
+        { \end{#1matrix} }
+}
     
 %----------------------MISC. TEXT MACROS----------------------%
 
