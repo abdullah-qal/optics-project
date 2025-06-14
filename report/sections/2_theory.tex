@@ -17,12 +17,18 @@ Under small-angle (paraxial) conditions, ray propagation through optical compone
 x_2 \\ \theta_2
 \end{bmatrix} = \begin{bmatrix} A & B \\ C & D \end{bmatrix} \begin{bmatrix} x_1 \\ \theta_1 \end{bmatrix} 
 \]
-On the other hand, wave optics treats light as a wave, enabling accurate modeling of interference and diffraction. Wavefront propagation 
-is described by the Huygens-Fresnel principle, and image formation is often analysed using Fourier optics. 
-The light field at an observation point $P$ can be calculated using the diffraction integral:
-\[
-U(P) = \4{e^{jkz}}{j\lambda z} \iint\limits_{\R^2} U(Q) e^{\5{jk\9{(x-x')^2 + (y-y')^2}}{2z}} \dd A'
+On the other hand, wave optics treats light as a wave, enabling accurate modeling of phenomena such as interference and diffraction,
+which are especially important when feature sizes are comparable to the wavelength of light. 
+One key application of wave optics is in understanding the point spread function (PSF), 
+how a point source of light is imaged through an optical system.
+
+For a circular aperture, the intensity distribution in the image plane is described by the Airy pattern, given by:
+\[ 
+I(r) = I_0\8{\4{2J_1(kr)}{kr}}^2
 \]
-Key metrics in wave optics include the PSF (Point Spread Function), which explains how a point source is imaged, and the MTF (Modulation Transfer Function),
- which showcases the system response to different spatial frequencies.
+This function arises from the Fourier transform of a circular aperture, and it accurately predicts the Airy disk and its 
+surrounding diffraction rings, which define the resolution limit of the optical system. This contrasts with ray optics,
+which would predict a perfect point image in the absence of aberrations.
+
+
 \end{multicols}

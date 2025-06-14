@@ -5,5 +5,51 @@
 \end{center}
 {\color{gray}\hrule}
 \begin{multicols}{2}
-\lipsum
+This study employs simulation-based analysis to investigate and compare the behavior of ray and wave optics in two specific imaging configurations: diffraction through a circular aperture and off-axis imaging with a high-aperture spherical lens. 
+The simulations were implemented in Python, and all parameters were normalized where appropriate to emphasize physical
+ effects without computational bias. The theoretical setups for each experiment follow the configurations detailed in the appendix.
+
+\subsection{Ray Optics Simulation}
+
+In the ray optics approach, light is modeled as straight lines obeying geometric rules. 
+The simulations make use of Snell's law and ray propagation through lenses using paraxial approximations. 
+Two cases were examined:
+
+\begin{itemize}
+\item \textbf{Diffraction-Limited Focus Without Aberrations:} Rays are emitted from a point source and traced through an ideal thin lens. 
+The rays converge perfectly at the geometric focus, and no wave-like behavior such as diffraction or interference 
+is considered. This represents the idealized case predicted by geometric optics.
+
+\item \textbf{Aberrated Off-Axis Imaging:} Rays from a point source located off the optical axis are propagated
+through a high numerical aperture (NA) spherical lens. Due to the curvature of the lens and the off-axis origin, 
+the rays fail to converge to a single point, revealing classical spherical aberration. The resulting spot diagram 
+illustrates ray spread and loss of resolution.
+\end{itemize}
+
+\subsection{Wave Optics Simulation}
+
+The wave optics framework models light as an electromagnetic wave governed by the scalar diffraction theory. 
+To account for diffraction and interference, the angular spectrum and Fourier optics approach were used. 
+The simulations explored the following:
+
+\begin{itemize}
+\item \textbf{Diffraction through a Circular Aperture:} A monochromatic point source is passed through a circular aperture. The resulting point spread function (PSF) is calculated using the Fraunhofer diffraction integral, which in the far-field limit reduces to the Airy pattern:
+
+\[
+I(r) = I_0 \8{\frac{2J_1(kr)}{kr}}^2
+\]
+
+where $J_1$ is the first-order Bessel function, $k = \frac{2\pi}{\lambda}$, and $r$ is the radial distance in the image plane. 
+This model predicts the central bright disk and surrounding diffraction rings.
+
+\item \textbf{Aberrations in High-NA Lens:} A wavefront with a phase distortion, corresponding to spherical aberration, is propagated through a lens aperture. The aperture function includes a phase delay term of the form:
+
+\[
+P(r) = A(r) \exp\left(i k W(r)\right)     
+\]
+
+where $W(r)$ represents the aberration function and $A(r)$ the amplitude profile across the aperture. The resulting PSF is computed using a two-dimensional Fourier transform, which reveals distortions and asymmetry in the focal intensity distribution due to interference and phase errors.
+\end{itemize}
+
+All simulations were executed using discretized spatial grids and FFT-based propagation techniques, which enabled efficient modeling of diffraction and aberration phenomena. The results were visualized to directly compare the predictions from ray and wave optics under matched conditions.
 \end{multicols}
